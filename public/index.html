@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stream Mate Companion MVP</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Stream Companion</p>
+        <h1>Local Advice Panel</h1>
+        <p class="lede">
+          This browser tool talks to a local helper running on the same streaming PC.
+          It shows local advice cards and can now transcribe your microphone in short live chunks.
+        </p>
+        <div class="status" id="statusCard">
+          <span class="status-label">Helper status</span>
+          <strong id="statusText">Loading</strong>
+        </div>
+        <div class="panel helper-panel">
+          <label>
+            <span>Helper URL</span>
+            <input id="helperUrl" type="text" value="http://127.0.0.1:3030" />
+          </label>
+          <button type="button" id="saveHelperUrlButton" class="ghost">Connect helper</button>
+        </div>
+      </section>
+
+      <section class="panel mic-panel">
+        <div class="panel-head">
+          <h2>Live microphone experiment</h2>
+          <p>
+            This is a safe local-only transcription mode. Audio is chunked in the browser and sent to the localhost helper for transcription.
+          </p>
+        </div>
+
+        <div class="mic-toolbar">
+          <button type="button" id="startMicButton" class="primary">Start mic</button>
+          <button type="button" id="stopMicButton" class="ghost" disabled>Stop mic</button>
+          <button type="button" id="clearTranscriptButton" class="ghost">Clear transcript</button>
+          <label class="toggle">
+            <input id="autoAdviceCheckbox" type="checkbox" checked />
+            <span>Auto-refresh advice from live transcript</span>
+          </label>
+        </div>
+
+        <div class="mic-meta">
+          <span id="micStatus">Mic idle</span>
+          <span id="transcriptStatus">No chunks yet</span>
+        </div>
+
+        <div id="transcriptFeed" class="transcript-feed">
+          <p class="empty">No live transcript yet.</p>
+        </div>
+      </section>
+
+      <section class="grid">
+        <form id="generatorForm" class="panel form-panel">
+          <div class="panel-head">
+            <h2>Current stream context</h2>
+            <p>Live transcript can fill the speech box automatically, and you can still add manual context.</p>
+          </div>
+
+          <label>
+            <span>Recent streamer speech</span>
+            <textarea id="recentTranscript" name="recentTranscript" rows="5" placeholder="Live transcript will appear here, or paste your own context."></textarea>
+          </label>
+
+          <label>
+            <span>Recent chat flow</span>
+            <textarea id="recentChat" name="recentChat" rows="4" placeholder="Example: finish that story / first time viewer here / do not drop that topic"></textarea>
+          </label>
+
+          <label>
+            <span>VC context</span>
+            <textarea id="vcContext" name="vcContext" rows="3" placeholder="Example: friend said my aim is cooked again"></textarea>
+          </label>
+
+          <label>
+            <span>Game state</span>
+            <textarea id="gameState" name="gameState" rows="3" placeholder="Example: buy phase / live fight / after death"></textarea>
+          </label>
+
+          <label>
+            <span>Preferred advice mode</span>
+            <select id="currentNeed" name="currentNeed">
+              <option value="Auto">Auto</option>
+              <option value="More retorts">More retorts</option>
+              <option value="Topic recovery">Topic recovery</option>
+              <option value="Viewer recap">Viewer recap</option>
+              <option value="Light teasing">Light teasing</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Extra notes</span>
+            <textarea id="extraNotes" name="extraNotes" rows="3" placeholder="Example: stop a self-deprecation spiral and make it clip-friendly"></textarea>
+          </label>
+
+          <div class="toolbar">
+            <button type="button" class="ghost" data-sample="weird">Weird thought</button>
+            <button type="button" class="ghost" data-sample="selfdeprecate">Self-drag loop</button>
+            <button type="button" class="ghost" data-sample="vc">VC context</button>
+          </div>
+
+          <button type="submit" class="primary">Generate advice</button>
+        </form>
+
+        <section class="panel output-panel">
+          <div class="panel-head">
+            <h2>Advice cards</h2>
+            <p id="summaryText">Nothing generated yet.</p>
+          </div>
+          <div id="warningBox" class="warning hidden"></div>
+          <div id="cards" class="cards"></div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
