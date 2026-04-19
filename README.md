@@ -1,133 +1,135 @@
 # Stream Mate Companion MVP
 
-This repo is for a streamer-side companion app.
+このリポジトリは、ストリーマー向けのコンパニオンアプリです。
 
-The chosen deployment model is:
+選択されたデプロイモデルは以下の通りです：
 
-- keep the code in GitHub
-- run a small local helper on the streaming PC
-- open the UI in a browser at `localhost`
+- コードを GitHub に保管
+- ストリーミング PC で小型ローカルヘルパーを実行
+- ブラウザで `localhost` の UI を開く
 
-This means the MVP does not need a separate cloud server.
+これにより、MVP は別のクラウドサーバーを必要としません。
 
-If you want to try it on GitHub Pages, the right split is:
+GitHub Pages で試したい場合、正しい分割は以下の通りです：
 
-- GitHub Pages hosts the static browser UI
-- your streaming PC still runs the local helper at `127.0.0.1:3030`
+- GitHub Pages は静的ブラウザ UI をホスト
+- ストリーミング PC は引き続き `127.0.0.1:3030` でローカルヘルパーを実行
 
-GitHub Pages cannot run the helper API by itself because it is static hosting only.
+GitHub Pages は静的ホスティングのみであるため、ヘルパー API 自体を実行することはできません。
 
-## What it does right now
+## 現在の機能
 
-- shows a local browser panel
-- captures microphone audio in the browser
-- sends short audio chunks to the local helper for transcription
-- accepts recent streamer speech, chat flow, VC context, and game state
-- returns short local advice cards for:
-  - pacing nudges
-  - topic recovery
-  - first-time-viewer context help
-  - energy shifts
-  - clip hints
-- uses OpenAI when configured
-- falls back to local rule-based advice when OpenAI is not configured
+- ローカルブラウザパネルを表示
+- ブラウザでマイク音声をキャプチャ
+- 短い音声チャンクをローカルヘルパーに送信して文字起こし
+- 最近のストリーマースピーチ、チャットフロー、VC コンテキスト、ゲーム状態を受け入れ
+- 以下の短いローカルアドバイスカードを返す：
+  - ペーシング調整
+  - トピック復帰
+  - 初見ユーザー向けコンテキストヘルプ
+  - エネルギー変化
+  - クリップヒント
+- 設定されている場合は OpenAI を使用
+- OpenAI が設定されていない場合はローカルルールベースのアドバイスにフォールバック
 
-## Important note
+## 重要な注記
 
-This version does not post to Twitch chat.
+このバージョンは Twitch チャットに投稿しません。
 
-It is intentionally a local experiment so the streamer can test the advice safely before any posting features are considered.
+意図的にローカル実験であり、ストリーマーがポスト機能を検討する前に、安全にアドバイスをテストできるようにしています。
 
-## Core files
+## コアファイル
 
-- [server.mjs](C:/Users/kesakai/Documents/Codex/2026-04-19-24/server.mjs)
-- [start-local-helper.ps1](C:/Users/kesakai/Documents/Codex/2026-04-19-24/start-local-helper.ps1)
-- [config.example.json](C:/Users/kesakai/Documents/Codex/2026-04-19-24/config.example.json)
-- [config.local.template.json](C:/Users/kesakai/Documents/Codex/2026-04-19-24/config.local.template.json)
-- [docs/mvp-spec.md](C:/Users/kesakai/Documents/Codex/2026-04-19-24/docs/mvp-spec.md)
-- [docs/localhost-architecture.md](C:/Users/kesakai/Documents/Codex/2026-04-19-24/docs/localhost-architecture.md)
-- [src/prompt.mjs](C:/Users/kesakai/Documents/Codex/2026-04-19-24/src/prompt.mjs)
-- [src/fallback.mjs](C:/Users/kesakai/Documents/Codex/2026-04-19-24/src/fallback.mjs)
-- [public/index.html](C:/Users/kesakai/Documents/Codex/2026-04-19-24/public/index.html)
+- [server.mjs](server.mjs)
+- [start-local-helper.ps1](start-local-helper.ps1)
+- [config.example.json](config.example.json)
+- [config.local.template.json](config.local.template.json)
+- [docs/mvp-spec.md](docs/mvp-spec.md)
+- [docs/localhost-architecture.md](docs/localhost-architecture.md)
+- [src/prompt.mjs](src/prompt.mjs)
+- [src/fallback.mjs](src/fallback.mjs)
+- [public/index.html](public/index.html)
 
-## Local helper model
+## ローカルヘルパーモデル
 
-GitHub stores the code.
+GitHub はコードを保管します。
 
-The streaming PC runs the helper locally and keeps secrets locally:
+ストリーミング PC はヘルパーをローカルで実行し、シークレットもローカルに保管します：
 
-- `OpenAI API key`
-- future Twitch tokens if chat reading is added later
+- `OpenAI API キー`
+- 後でチャット読み込みが追加された場合の将来の Twitch トークン
 
-The browser UI talks only to the local helper at `127.0.0.1`.
+ブラウザ UI は `127.0.0.1` のローカルヘルパーとのみ通信します。
 
-## Setup
+## セットアップ
 
-1. Copy `config.local.template.json` to `config.local.json`
-2. Fill in `openai.apiKey`
-3. Set a model in `openai.model`
-4. Run the local helper
-5. Open `http://127.0.0.1:3030`
+1. `config.local.template.json` を `config.local.json` にコピー
+2. `openai.apiKey` に入力
+3. `openai.model` でモデルを設定
+4. ローカルヘルパーを実行
+5. `http://127.0.0.1:3030` を開く
 
-## Run
+## 実行
 
-Recommended:
+推奨：
 
 ```powershell
-.\start-local-helper.ps1
+.
+start-local-helper.ps1
 ```
 
-Direct run:
+直接実行：
 
 ```powershell
 & 'C:\Users\kesakai\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' .\server.mjs
 ```
 
-## Try it on GitHub
+## GitHub で試す
 
-The GitHub Pages version hosts only the front-end.
-The local helper still runs on your own PC.
+GitHub Pages バージョンはフロントエンドのみをホストします。
+ローカルヘルパーは引き続き PC で実行されます。
 
-1. Push this folder to a GitHub repository
-2. Enable GitHub Pages for this repository
-3. Run the helper locally on your PC with `.\start-local-helper.ps1`
-4. Open your GitHub Pages URL in the browser
-5. Leave the helper URL set to `http://127.0.0.1:3030` and click `Connect helper`
+1. このフォルダを GitHub リポジトリにプッシュ
+2. このリポジトリの GitHub Pages を有効化
+3. `.
+start-local-helper.ps1` でローカルヘルパーを PC で実行
+4. ブラウザで GitHub Pages URL を開く
+5. ヘルパー URL を `http://127.0.0.1:3030` に設定し、`Connect helper` をクリック
 
-Notes:
+注：
 
-- GitHub Pages is static hosting, so the browser page talks across origins to your local helper
-- the helper now allows requests from `https://*.github.io`
-- browsers generally allow secure pages to access loopback addresses such as `http://127.0.0.1`
-- for the actual streaming PC, the local helper model is still the recommended deployment
+- GitHub Pages は静的ホスティングなため、ブラウザページはローカルヘルパーとのオリジン間で通信します
+- ヘルパーは `https://*.github.io` からのリクエストを許可
+- ブラウザは一般的に `http://127.0.0.1` などのループバックアドレスへのアクセスを許可
+- 実際のストリーミング PC では、ローカルヘルパーモデルが推奨されるデプロイメント
 
-## Config note
+## 設定上の注意
 
-Do not commit `config.local.json`.
+`config.local.json` をコミットしないでください。
 
-It is ignored by `.gitignore` so keys stay local to the streaming PC.
+`.gitignore` で無視されるため、キーはストリーミング PC にローカルのままになります。
 
-## Current scope
+## 現在のスコープ
 
-Implemented:
+実装済み：
 
-- local helper HTTP server
-- browser UI
-- chunked microphone transcription through the local helper
-- OpenAI-backed advice generation
-- fallback advice generation
-- companion persona rules
+- ローカルヘルパー HTTP サーバー
+- ブラウザ UI
+- ローカルヘルパーを通じたチャンク化マイク文字起こし
+- OpenAI ベースのアドバイス生成
+- フォールバックアドバイス生成
+- コンパニオンペルソナルール
 
-Not yet implemented:
+未実装：
 
-- Twitch EventSub chat receive
-- full low-latency Realtime API transcription
-- any Twitch posting
+- Twitch EventSub チャット受信
+- フル低レイテンシー Realtime API 文字起こし
+- Twitch ポスト機能
 
-## Recommended next steps
+## 推奨される次のステップ
 
-1. Add Twitch chat receive through EventSub WebSocket
-2. Merge transcript and chat into one rolling context window
-3. Improve the live transcript cleanup for filler words and repeated chunks
-4. Upgrade from chunked transcription to a fuller realtime connection if needed
-5. Keep the app in suggest-only live mode until the experiment feels safe
+1. EventSub WebSocket を通じて Twitch チャット受信を追加
+2. トランスクリプトとチャットをローリングコンテキストウィンドウにマージ
+3. フィラーワードと繰り返しチャンクのライブトランスクリプトクリーンアップを改善
+4. 必要に応じて、チャンク化文字起こしをフル realtime 接続にアップグレード
+5. 実験が安全に感じられるまで、アプリを提案のみのライブモードで保持
