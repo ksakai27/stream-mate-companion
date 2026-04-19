@@ -1,0 +1,16 @@
+{
+  "openai": {
+    "apiKey": "sk-REPLACE_ME",
+    "model": "gpt-5.4-mini",
+    "transcriptionModel": "gpt-4o-mini-transcribe",
+    "transcriptionLanguage": "ja"
+  },
+  "streamer": {
+    "assistantName": "AikataBot",
+    "streamerName": "YourName"
+  },
+  "app": {
+    "host": "127.0.0.1",
+    "port": 3030
+  }
+}

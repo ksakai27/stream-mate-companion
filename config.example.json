@@ -1,0 +1,38 @@
+{
+  "openai": {
+    "apiKey": "",
+    "model": "",
+    "transcriptionModel": "gpt-4o-mini-transcribe",
+    "transcriptionLanguage": "ja"
+  },
+  "streamer": {
+    "assistantName": "AikataBot",
+    "streamerName": "Streamer",
+    "persona": "24-year-old female streamer who works a day job and streams VALORANT, Mahjong Soul, and Minecraft.",
+    "targetStyle": "Fast back-and-forth energy with light teasing, sharp retorts, and easy clip moments.",
+    "strengths": [
+      "weird original observations",
+      "sound-based wordplay",
+      "light argument energy",
+      "fast reactions to chat"
+    ],
+    "avoid": [
+      "identity attacks",
+      "mean-spirited teasing",
+      "long lectures",
+      "constant negativity",
+      "spam",
+      "accidental posting or anything that breaks the mood"
+    ],
+    "preferredModes": [
+      "nudge",
+      "topic recovery",
+      "viewer recap",
+      "clip hint"
+    ]
+  },
+  "app": {
+    "host": "127.0.0.1",
+    "port": 3030
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "stream-mate-companion-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local MVP for a streamer companion app that gives live advice cards during a stream.",
+  "scripts": {
+    "start": "node server.mjs",
+    "start:codespaces": "node server.mjs"
+  }
+}
