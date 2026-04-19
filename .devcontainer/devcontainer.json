@@ -1,0 +1,23 @@
+{
+  "name": "stream-mate-companion",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "forwardPorts": [3030],
+  "portsAttributes": {
+    "3030": {
+      "label": "Stream Mate Companion",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "remoteEnv": {
+    "HOST": "0.0.0.0",
+    "PORT": "3030"
+  },
+  "postCreateCommand": "npm --version",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "files.eol": "\n"
+      }
+    }
+  }
+}
